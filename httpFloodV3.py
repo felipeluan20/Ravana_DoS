@@ -59,7 +59,7 @@ def envia_cargas(metodos_permitidos):
                 # Registra um erro se o envio da carga falhar
                 logging.error(f"Erro ao enviar carga com {metodo}: {str(e)}")
 
-# Função para realizar uma inundação HTTP ao servidor alvo
+# Função para realizar um método http ao servidor alvo
 def inundacao_http():
     with requests.Session() as sessao:
         for _ in range(max_requisicoes_por_thread):
