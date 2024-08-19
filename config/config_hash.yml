@@ -1,0 +1,5 @@
+endpoint: "http://192.168.15.11:5000/api/endpoint"
+data_list:
+  - data1
+  - data2
+  - data3
