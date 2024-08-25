@@ -1,0 +1,9 @@
+endpoint: "http://192.168.15.11:5000/api/endpoint"
+methods:  - GET  - POST  - PUT  - DELETE
+threads: 50
+headers:  
+  User-Agent: "Mozilla/5.0"  
+  Content-Type: "application/json"
+data_payloads:   
+- {"id": 1, "action": "test"}  
+- {"id": 2, "action": "test2"}
