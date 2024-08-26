@@ -1,7 +1,10 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import threading
 import argparse
 import yaml
-from hash_collision import infinite_hash_collision
+from scripts.hash_collision.hash_collision import infinite_hash_collision
 from api_abuse import infinite_abuse_api
 
 # Função para carregar a configuração do arquivo YML

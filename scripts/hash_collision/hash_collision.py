@@ -64,3 +64,4 @@ if __name__ == "__main__":
         config = yaml.safe_load(file)
 
     infinite_hash_collision(config)
+ 
