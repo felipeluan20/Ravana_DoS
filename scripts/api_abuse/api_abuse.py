@@ -63,8 +63,4 @@ def infinite_abuse_api(config, endpoint=None, threads=None):
 
     abuse_api_parallel(api_methods, url, headers, data_payloads, num_threads)
 
-# Execução principal
-if __name__ == "__main__":
-    args = parse_args()
-    config = load_config(args.config)
-    infinite_abuse_api(config, endpoint=args.endpoint, threads=args.threads)
+

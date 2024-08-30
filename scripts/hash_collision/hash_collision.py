@@ -57,11 +57,4 @@ def infinite_hash_collision(config, endpoint=None, threads=None):
     # Iniciar o envio infinito de requisições
     infinite_requests(data_list, url, num_threads)
 
-# Execução principal condicional (para testes locais)
-if __name__ == "__main__":
-    # Carregar configuração do arquivo YML
-    with open("config/config_hash.yml", 'r') as file:
-        config = yaml.safe_load(file)
-
-    infinite_hash_collision(config)
  

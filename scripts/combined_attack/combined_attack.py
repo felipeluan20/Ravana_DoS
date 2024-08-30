@@ -4,8 +4,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 import threading
 import argparse
 import yaml
-from scripts.hash_collision.hash_collision import infinite_hash_collision
-from api_abuse import infinite_abuse_api
+from hash_collision.hash_collision import infinite_hash_collision
+from api_abuse.api_abuse import infinite_abuse_api
 
 # Função para carregar a configuração do arquivo YML
 def load_config(file_path):
@@ -16,22 +16,15 @@ def load_config(file_path):
 def parse_args():
     parser = argparse.ArgumentParser(description="Ravana - Combined DoS Attack Tool")
     
-    parser.add_argument('--endpoint', type=str, default=None,
-                        help='URL do endpoint da API (padrão: do arquivo config_api.yml)')
-    parser.add_argument('--threads', type=int, default=50,
-                        help='Número de threads para o ataque de API (padrão: 50)')
-    parser.add_argument('--hash-endpoint', type=str, default=None,
-                        help='URL do endpoint para o ataque de colisão de hash (padrão: do arquivo config_hash.yml)')
-    parser.add_argument('--hash-threads', type=int, default=50,
-                        help='Número de threads para o ataque de colisão de hash (padrão: 50)')
-    parser.add_argument('--config-api', type=str, default="config/config_api.yml",
-                        help='Caminho para o arquivo de configuração YAML do ataque de API (padrão: config/config_api.yml)')
-    parser.add_argument('--config-hash', type=str, default="config/config_hash.yml",
-                        help='Caminho para o arquivo de configuração YAML do ataque de hash (padrão: config/config_hash.yml)')
-    parser.add_argument('--run-hash', action='store_true', default=False,
-                        help='Executar ataque de colisão de hash (padrão: False)')
-    parser.add_argument('--run-api', action='store_true', default=False,
-                        help='Executar ataque de abuso de API (padrão: False)')
+    parser.add_argument('--endpoint', type=str, default=None, help='URL do endpoint da API (padrão: do arquivo config_api.yml)')
+    parser.add_argument('--threads', type=int, default=200, help='Número de threads para o ataque de API (padrão: 200)')
+    parser.add_argument('--hash-endpoint', type=str, default=None, help='URL do endpoint para o ataque de colisão de hash (padrão: do arquivo config_hash.yml)')
+    parser.add_argument('--hash-threads', type=int, default=200, help='Número de threads para o ataque de colisão de hash (padrão: 200)')
+    parser.add_argument('--config-api', type=str, default="config/config_api.yml", help='Caminho para o arquivo de configuração YAML do ataque de API (padrão: config/config_api.yml)')
+    parser.add_argument('--config-hash', type=str, default="config/config_hash.yml", help='Caminho para o arquivo de configuração YAML do ataque de hash (padrão: config/config_hash.yml)')
+    parser.add_argument('--run-hash', action='store_true', default=False, help='Executar ataque de colisão de hash (padrão: False)')
+    parser.add_argument('--run-api', action='store_true', default=False, help='Executar ataque de abuso de API (padrão: False)')
+    parser.add_argument('--duration', type=int, default=600, help='Duração do ataque em segundos (padrão: 600)')
     
     return parser.parse_args()
 

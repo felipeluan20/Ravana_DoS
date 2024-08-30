@@ -1,9 +1,19 @@
-endpoint: "http://192.168.15.11:5000/api/endpoint"
-methods:  - GET  - POST  - PUT  - DELETE
-threads: 50
-headers:  
-  User-Agent: "Mozilla/5.0"  
+# config/config_api.yml
+
+endpoint: "http://35.238.138.9/wp-json/wp/v2/posts"  # Endpoint correto para o abuso da API do WordPress
+
+methods:
+  - "GET"
+  - "POST"
+  - "PUT"
+  - "DELETE"
+
+threads: 50  # Número de threads para o ataque de API
+
+headers:
+  User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
   Content-Type: "application/json"
-data_payloads:   
-- {"id": 1, "action": "test"}  
-- {"id": 2, "action": "test2"}
+
+data_payloads:
+  - { "title": "Attack Post 1", "content": "This is a test attack content" }
+  - { "title": "Attack Post 2", "content": "This is a second test attack content" }

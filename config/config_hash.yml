@@ -1,5 +1,9 @@
-endpoint: "http://192.168.15.11:5000/api/endpoint"
-data_list:
-  - data1
-  - data2
-  - data3
+# config/config_hash.yml
+
+endpoint: "http://35.238.138.9/wp-admin/admin-ajax.php"  # Endpoint correto para o ataque de colisão de hash
+
+num_collisions: 1000  # Número de colisões de hash a serem geradas
+base_string: "test_string"  # String base para gerar colisões
+hash_algorithm: "md5"  # Algoritmo de hash a ser utilizado (md5, sha1, sha256)
+
+threads: 50  # Número de threads para envio de requisições
