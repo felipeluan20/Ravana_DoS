@@ -1,6 +1,6 @@
 # config/config_hash.yml
 
-endpoint: "http://35.238.138.9/wp-admin/admin-ajax.php"  # Endpoint correto para o ataque de colisão de hash
+endpoint: "https://www.pridesec.com.br"  # Endpoint correto para o ataque de colisão de hash
 
 num_collisions: 1000  # Número de colisões de hash a serem geradas
 base_string: "test_string"  # String base para gerar colisões

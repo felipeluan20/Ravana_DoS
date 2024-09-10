@@ -1,6 +1,6 @@
 # config/config_api.yml
 
-endpoint: "http://35.238.138.9/wp-json/wp/v2/posts"  # Endpoint correto para o abuso da API do WordPress
+endpoint: "https://www.pridesec.com.br"  # Endpoint correto para o abuso da API do WordPress
 
 methods:
   - "GET"
